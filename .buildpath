@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="src.main"/>
+	<buildpathentry kind="src" path="src.test"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.mod.launching.INTERPRETER_CONTAINER"/>
+	<buildpathentry kind="con" path="org.eclipse.vjet.eclipse.core.JSNATIVE_CONTAINER/JS Native Types"/>
+	<buildpathentry kind="con" path="org.eclipse.vjet.eclipse.core.BROWSER_CONTAINER/Browser SDK"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-aop-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-aspects-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-beans-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-context-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-context-support-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-core-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-expression-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-instrument-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-instrument-tomcat-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-jdbc-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-jms-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-messaging-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-orm-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-oxm-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-test-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-tx-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-web-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-webmvc-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-webmvc-portlet-4.1.5.RELEASE-javadoc.jar"/>
+	<buildpathentry external="true" kind="lib" path="C:/satya/Personal/Study/jars/spring/4.1.5.RELEASE/spring-framework-4.1.5.RELEASE/libs/spring-websocket-4.1.5.RELEASE-javadoc.jar"/>
+</buildpath>

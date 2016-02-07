@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- comment these lines before execution -->
+<!-- <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
+    3.0//EN" "hibernate-mapping-3.0.dtd"> -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.sb.pojo" default-lazy="false">
+    <class name="Organization">
+        <id name="id">
+            <generator class="native" />
+        </id>
+        <property name="name"/>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+    <class name="Author">
+        <id name="authorId">
+            <generator class="native" />
+        </id>
+        <property name="authorName" unique="true" />
+        <property name="password" />
+        <property name="fullName" />
+        <property name="creationTime" />
+        <many-to-one name="organization" class="Organization" column="id"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+    <class name="Project">
+        <id name="projectId">
+            <generator class="native" />
+        </id>
+        <property name="projectName" unique="true" />
+        <property name="projectDescription" length="5000"/>
+        <property name="creationDate" />
+        <many-to-one name="author" class="Author" column="authorId"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+    <class name="Iteration">
+        <id name="iterationId">
+            <generator class="native" />
+        </id>
+        <property name="name" unique="true" />
+        <property name="description" length="5000" /><!-- description 
+            can be more that var char to .... is it fine -->
+        <property name="startDate" />
+        <property name="endDate" />
+        <property name="creationTime" />
+        <many-to-one name="author" class="Author" column="authorId"></many-to-one>
+        <many-to-one name="project" class="Project" column="projectId"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+
+    <class name="UserStory">
+        <id name="userstoryId">
+            <generator class="native" />
+        </id>
+        <property name="name" length="500" />
+        <property name="description" length="5000" />
+        <property name="planEstimate" />
+        <property name="creationTime" />
+        <property name="comment" />
+        <property name="priority" />
+        <many-to-one name="author" class="Author" column="authorId"></many-to-one>
+        <many-to-one name="iteration" class="Iteration" column="iterationId"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+
+    <class name="Task">
+        <id name="taskId">
+            <generator class="native" />
+        </id>
+        <property name="name" length="500" />
+        <property name="description" length="5000" />
+        <property name="taskEstimate" />
+        <property name="actual" />
+        <property name="remaining" />
+        <property name="creationTime" />
+        <property name="comment" />
+        <property name="priority" />
+        <property name="status" />
+        <many-to-one name="author" class="Author" column="authorId"></many-to-one>
+        <many-to-one name="userStory" class="UserStory" column="userstoryId"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+
+    <class name="Bug">
+        <id name="bugId">
+            <generator class="native" />
+        </id>
+        <property name="name" length="500" />
+        <property name="description" length="5000" />
+        <property name="status" />
+        <property name="priority" />
+        <property name="severity" />
+        <property name="creationTime" />
+        <property name="comment" length="5000"/>
+        <property name="estimate" />
+        <property name="actual" />
+        <property name="remaining" />
+        <many-to-one name="engineer" class="Author" column="engineerId"></many-to-one>
+        <many-to-one name="createdBy" class="Author" column="submitterId"></many-to-one>
+        <many-to-one name="userStory" class="UserStory" column="userstoryId"></many-to-one>
+        <many-to-one name="history" class="History" column="historyId"></many-to-one>
+    </class>
+    
+    <class name="History">
+        <id name="historyId">
+            <generator class="native" />
+        </id>
+        <set name="informations" cascade="save-update" table="ALL_HISTORY">
+         <key column="historyId"/>
+         <many-to-many column="infoId" class="PastInformation"/>
+      </set>
+    </class>
+    
+     <class name="PastInformation">
+        <id name="infoId">
+            <generator class="native" />
+        </id>
+        <property name="whenCreated"/>
+        <property name="changeMessage"/>
+        <many-to-one name="updatedBy" class="Author" column="authorId"/>
+    </class>
+    
+</hibernate-mapping>
