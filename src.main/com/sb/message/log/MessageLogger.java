@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * This class is used to provide the message is a proper format which should be replaced by logging mechanism
  * 
- * @author sbarik
+ * @author satya60.shekhar@gmail.com
  * 
  */
 public class MessageLogger {

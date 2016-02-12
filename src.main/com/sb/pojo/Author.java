@@ -2,6 +2,11 @@ package com.sb.pojo;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class Author {
     private long authorId; // PK
     private String authorName;
@@ -10,11 +15,10 @@ public class Author {
     private Date creationTime;
     private Organization organization;
     private History history;
-    
+
     @Override
     public String toString() {
-        return "Author (" + authorId
-                + ", " + authorName + ", " + fullName + ", " + creationTime + ")";
+        return "Author (" + authorId + ", " + authorName + ", " + fullName + ", " + creationTime + ")";
     }
     
     public Author() {

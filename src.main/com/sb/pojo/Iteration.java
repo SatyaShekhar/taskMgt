@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * TODO add java doc on the equals and hascode as its dependent to our project implementation
  * 
- * @author sbarik
+ * @author satya60.shekhar@gmail.com
  *
  */
 public class Iteration {

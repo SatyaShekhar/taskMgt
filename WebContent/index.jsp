@@ -9,6 +9,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login Page</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images\general\drop.png">
 </head>
 <body>
     <%! MessageLogger logger = new MessageLogger(getClass()); %>
@@ -19,11 +22,11 @@
             </tr>
             <tr>
                 <td>User Name</td>
-                <td><input type="text" name="<%=PropertyNames.USER_NAME%>" value="satya"></td>
+                <td><input type="text" name="<%=PropertyNames.USER_NAME%>" value="Satya (TM)"></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="<%=PropertyNames.PASSWORD%>" value="satya"></td>
+                <td><input type="password" name="<%=PropertyNames.PASSWORD%>" value="password@12345"></td>
             </tr>
             <tr>
                 <td colspan="2" align="right"><input type="submit" name="Login"></td>
@@ -39,7 +42,7 @@
                     }
                     logger.info("Total number of session attributes are : " );
                     Enumeration<String> enumeration = session.getAttributeNames();
-                    List<String> attributes = new ArrayList();
+                    List<String> attributes = new ArrayList<String>();
                     while(enumeration.hasMoreElements()) {
                         String attr = enumeration.nextElement();
                         attributes.add(attr);

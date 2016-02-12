@@ -1,5 +1,10 @@
 package com.sb.constants;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public enum ProgressStatus {
     Defined(1),
     Progress(2),

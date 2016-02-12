@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class InlineEditTaskDetailsManager
  * 
- * @author sbarik
+ * @author satya60.shekhar@gmail.com
  */
 @WebServlet(description = "this class is used to upate task manager", urlPatterns = { "/inlineEditTaskManager" })
 public class InlineEditTaskDetailsManager extends HttpServlet {

@@ -2,7 +2,12 @@ package com.sb.pojo;
 
 import java.util.Date;
 
-public class UserStory {
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
+public class UserStory implements Comparable<UserStory> {
     private long userstoryId;
     private String name;
     private String description;
@@ -116,6 +121,11 @@ public class UserStory {
      */
     public void setHistory(History history) {
         this.history = history;
+    }
+    @Override
+    public int compareTo(UserStory otherUS) {
+        // TODO committed temporaryly return Byte.valueOf(priority).compareTo(otherUS.priority);
+        return Long.valueOf(getUserstoryId()).compareTo(otherUS.getUserstoryId());
     }    
 
 }

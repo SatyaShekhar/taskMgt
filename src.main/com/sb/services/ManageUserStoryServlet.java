@@ -23,6 +23,8 @@ import com.sb.pojo.UserStory;
 
 /**
  * Servlet implementation class UpdateUserStoryServlet
+ * 
+ * @author satya60.shekhar@gmail.com
  */
 @WebServlet("/manageUserStory")
 public class ManageUserStoryServlet extends HttpServlet {

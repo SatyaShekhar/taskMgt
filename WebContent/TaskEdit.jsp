@@ -24,18 +24,12 @@
 </head>
 <body>
     <%! MessageLogger logger = new MessageLogger(getClass()); %>
-    <%
-       /* TODO validation check needs to be adopted here String message = (String) session.getAttribute(PropertyNames.TASK_ALREADY_EXISTS); 
-        if (message != null) {
-            session.removeAttribute(PropertyNames.TASK_ALREADY_EXISTS);
-        } */
-    %>
     <form action="manageTask">
         <%
             String taskId = request.getParameter(PropertyNames.TASK_ID);
             logger.info("Update task for task" + taskId);
             if (taskId == null) {
-                logger.info("Strance task id is null here !!!!");
+                logger.info("Strange task id is null here !!!!");
                 return;
             }
             Session dbSession = ConnectionProvider.openSession();
@@ -51,11 +45,9 @@
            <table align="left">
         <tr><td colspan="2" align="center"><b>Update task</b></td>
     
-      <tr><td bgcolor="#E6E6E6">TA <%=PropertyNames.TASK_ID%> </td><td><input type="text" name="<%=PropertyNames.TASK_NAME%>" value="<%=task.getName()%>" size="60" placeholder="Enter a task title here"> </td></tr>
-      <tr><td bgcolor="#E6E6E6">Task Description :  </td><td> <textarea rows="8" cols="60" name="<%=PropertyNames.TASK_DESCRIPTION%>" placeholder="Enter a task description here"><%=task.getDescription()%></textarea> </td></tr>
-       
-       
-        <tr><td bgcolor="#E6E6E6">Engineer :</td>
+      <tr><td>TA(<%=taskId%>) </td><td><input type="text" name="<%=PropertyNames.TASK_NAME%>" value="<%=task.getName()%>" size="60" placeholder="Enter a task title here"> </td></tr>
+      <tr><td valign="top">Description</td><td> <textarea rows="8" cols="60" name="<%=PropertyNames.TASK_DESCRIPTION%>" placeholder="Enter a task description here"><%=task.getDescription()%></textarea> </td></tr>
+        <tr><td>Engineer</td>
             <td>
                 <select name="<%=PropertyNames.USER_ID%>">
                     <%
@@ -72,13 +64,12 @@
                     <option value="<%=author.getAuthorId()%>"><%=author.getAuthorName()%></option>
                     <%
                         }
-                                    }
+                      }
                     %>
                 </select>
             </td></tr>
         
-        
-        <tr><td bgcolor="#E6E6E6">Priority : </td>
+        <tr><td>Priority</td>
             <td>
              <select name="<%=PropertyNames.TASK_PRIORITY%>">
                 <%
@@ -92,13 +83,13 @@
                             else {
                 %>
                         <option value="<%=priority.getValue()%>"><%=priority.name()%></option>
-                        <%
-                            }
-                                }
-                        %>
+                <%
+                   }
+                 }
+                 %>
                 </select>
             </td></tr>
-        <tr><td bgcolor="#E6E6E6">Status : </td>
+        <tr><td >Status</td>
             <td>
              <select name="<%=PropertyNames.TASK_STATUS%>">
                 <%
@@ -113,12 +104,12 @@
                         <option value="<%=pStatus.getValue()%>" ><%=pStatus.name()%></option>
                         <%
                             }
-                                    }
+                       }
                         %>
                 </select>
             </td></tr>
             
-        <tr><td bgcolor="#E6E6E6">User Story : </td>
+        <tr><td>User Story</td>
             <td>
               <select name="<%=PropertyNames.USERSTORY_ID%>">
                 <%
@@ -137,12 +128,12 @@
                 } %>
             </select>
             </td></tr>
-        <tr><td bgcolor="#E6E6E6">Task Estimate : </td><td><input type="text" name="<%=PropertyNames.TASK_ESTIMATE%>" size="3" value="<%=task.getTaskEstimate()%>"/> </td></tr>
-        <tr><td bgcolor="#E6E6E6">Actual : </td><td><input type="text" name="<%=PropertyNames.TASK_ACTUAL%>" size="3" value="<%=task.getActual()%>"/> </td></tr>
-        <tr><td bgcolor="#E6E6E6">Todo  : </td><td><input type="text" name="<%=PropertyNames.TASK_TODO%>" size="3" value="<%=task.getRemaining()%>"/> </td></tr>
+        <tr><td>Estimate</td><td><input type="text" name="<%=PropertyNames.TASK_ESTIMATE%>" size="3" value="<%=task.getTaskEstimate()%>"/> Days </td></tr>
+        <tr><td>Actual</td><td><input type="text" name="<%=PropertyNames.TASK_ACTUAL%>" size="3" value="<%=task.getActual()%>"/>  Days</td></tr>
+        <tr><td>Remaining</td><td><input type="text" name="<%=PropertyNames.TASK_TODO%>" size="3" value="<%=task.getRemaining()%>"/>  Days</td></tr>
          
         <tr><td colspan="2" align="center">
-             <input type="button" value="cancel" onclick="window.close();"/>
+             <input type="button" value="Cancel" onclick="window.close();"/>
             <input type="submit" name="<%=PropertyNames.USER_ACTION%>" value="<%=Action.Update%>" />
         </td></tr>
     </table>

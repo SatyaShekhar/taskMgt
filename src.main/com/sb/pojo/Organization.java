@@ -1,8 +1,15 @@
 package com.sb.pojo;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class Organization {
     private long id;
     private String name;
+    // Organization history!! how it will be maintained as there will not be any author while creating.
+    // So no author while creating the organization add when modified later.
     private History history;
 
     /**
@@ -42,4 +49,8 @@ public class Organization {
         this.history = history;
     }
 
+    @Override
+    public String toString() {
+        return "Organization(Name:"+getName()+")";
+    }
 }

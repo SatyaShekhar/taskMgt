@@ -21,6 +21,8 @@ import com.sb.pojo.Project;
 
 /**
  * Servlet implementation class ManageProjectServlet
+ * 
+ * @author satya60.shekhar@gmail.com
  */
 @WebServlet("/manageProject")
 public class ManageProjectServlet extends HttpServlet {
@@ -48,12 +50,11 @@ public class ManageProjectServlet extends HttpServlet {
         Session sessionDB = ConnectionProvider.openSession();
 
         Author loggedInUser = (Author) request.getSession(true).getAttribute(PropertyNames.USER);
-        System.out.println("User id is " + request.getSession(true).getAttribute(PropertyNames.USER_NAME));
         if (loggedInUser == null) {
             throw new IllegalStateException(
                     "Something is missing to initilize the loogged in user in session scope. Please check and fix :)");
         }
-
+        System.out.println("User id is " + loggedInUser.getAuthorId());
         if (Action.Delete == action) {
             if (projectIdString == null) {
                 throw new IllegalStateException("Project Id can not be null here.");
@@ -83,6 +84,7 @@ public class ManageProjectServlet extends HttpServlet {
                     "New Project created with name " + project.getProjectName() + "\n Description " + project.getProjectDescription(),
                     loggedInUser));
             project.setHistory(history);
+            project.setOrganization(loggedInUser.getOrganization());
             sessionDB.save(history);
         } else if (Action.Update == action) {
             logger.info("1.7 Update project action");

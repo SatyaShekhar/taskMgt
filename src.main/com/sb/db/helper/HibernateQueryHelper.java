@@ -1,8 +1,4 @@
 package com.sb.db.helper;
-/**
- * 
- */
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +10,12 @@ import com.sb.pojo.Author;
 import com.sb.pojo.Iteration;
 
 /**
- * @author sbarik
+ * TODO : check and remove if not applicable
+ * 
+ * @author satya60.shekhar@gmail.com
  * 
  */
+@Deprecated
 public class HibernateQueryHelper {
 
     public static Author isValidUser(String user, String password) {

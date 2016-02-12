@@ -3,6 +3,11 @@ package com.sb.pojo;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class History {
     private long historyId;
     private Set<PastInformation> informations;

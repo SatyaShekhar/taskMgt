@@ -3,7 +3,7 @@ package com.sb.constants;
 /**
  * TODO Add a test for this class so that two properties can not contain same vale. if so test will fail
  * 
- * @author sbarik
+ * @author satya60.shekhar@gmail.com
  * 
  */
 public class PropertyNames {

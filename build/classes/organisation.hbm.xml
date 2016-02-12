@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- comment these lines before execution -->
-<!-- <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
-    3.0//EN" "hibernate-mapping-3.0.dtd"> -->
+<!-- <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd"> -->
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.sb.pojo" default-lazy="false">
@@ -9,16 +8,16 @@
         <id name="id">
             <generator class="native" />
         </id>
-        <property name="name"/>
+        <property name="name" length="500"/>
         <many-to-one name="history" class="History" column="historyId"></many-to-one>
     </class>
-    <class name="Author">
+    <class name="Author" lazy="false">
         <id name="authorId">
             <generator class="native" />
         </id>
         <property name="authorName" unique="true" />
         <property name="password" />
-        <property name="fullName" />
+        <property name="fullName" length="500"/>
         <property name="creationTime" />
         <many-to-one name="organization" class="Organization" column="id"></many-to-one>
         <many-to-one name="history" class="History" column="historyId"></many-to-one>
@@ -27,17 +26,18 @@
         <id name="projectId">
             <generator class="native" />
         </id>
-        <property name="projectName" unique="true" />
+        <property name="projectName" unique="true" length="500"/>
         <property name="projectDescription" length="5000"/>
         <property name="creationDate" />
         <many-to-one name="author" class="Author" column="authorId"></many-to-one>
         <many-to-one name="history" class="History" column="historyId"></many-to-one>
+        <many-to-one name="organization" class="Organization" column="id"></many-to-one>
     </class>
     <class name="Iteration">
         <id name="iterationId">
             <generator class="native" />
         </id>
-        <property name="name" unique="true" />
+        <property name="name" unique="true" length="500"/>
         <property name="description" length="5000" /><!-- description 
             can be more that var char to .... is it fine -->
         <property name="startDate" />
@@ -116,7 +116,7 @@
             <generator class="native" />
         </id>
         <property name="whenCreated"/>
-        <property name="changeMessage"/>
+        <property name="changeMessage" length="9000"/>
         <many-to-one name="updatedBy" class="Author" column="authorId"/>
     </class>
     

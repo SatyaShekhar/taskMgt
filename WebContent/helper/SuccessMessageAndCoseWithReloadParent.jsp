@@ -4,21 +4,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images\general\drop.png">
 <script type="text/javascript">
-	function reloadParentAndClose() {
-		window.opener.location.href = window.opener.location.href;
-		if (window.opener.progressWindow) {
-			window.opener.progressWindow.close()
-		}
-		window.close();
-	}
+    function reloadParentAndClose() {
+        window.opener.location.href = window.opener.location.href;
+        if (window.opener.progressWindow) {
+            window.opener.progressWindow.close()
+        }
+        window.close();
+    }
 </script>
 </head>
 <body>
     <h3 style='color: green' align="center">Action completed successfully. Click close to return to main page.</h3>
     <br>
     <div align="center">
-        <input type='button' value='close' onclick='reloadParentAndClose();' align="middle" />
+        <input type='button' value='Close' onclick='reloadParentAndClose();' align="middle" />
     </div>
 </body>
 </html>

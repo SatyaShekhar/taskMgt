@@ -1,3 +1,5 @@
+<%@page import="com.sb.db.helper.HqlQueryHelper"%>
+<%@page import="com.sb.helper.DateFormatProvider"%>
 <%@page import="com.sb.constants.Constants"%>
 <%@page import="com.sb.pojo.Project"%>
 <%@page import="com.sb.pojo.Author"%>
@@ -11,7 +13,7 @@
 <%@page import="com.sb.message.log.MessageLogger"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" session="true"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -20,32 +22,32 @@
 <body>
 <%! MessageLogger logger = new MessageLogger(getClass()); %>
 <%
-String userName = (String) session.getAttribute(PropertyNames.USER_NAME);
-if (userName == null) {
-    session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "You have to login first to access any home page");
-    response.sendRedirect("index.jsp");
-    return;
-}
-Session sessionDB = ConnectionProvider.openSession();
-String projectIdString = request.getParameter(PropertyNames.PROJECT_ID);
+    Author author = (Author) session.getAttribute(PropertyNames.USER);
+    if (author == null) {
+        session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "You have to login first to access any home page");
+        response.sendRedirect("index.jsp");
+        return;
+    }
+    Session sessionDB = ConnectionProvider.openSession();
+    String projectIdString = request.getParameter(PropertyNames.PROJECT_ID);
 %>
 <form action="manageIteration" method="post">
-    <table align="left">
-        <tr><td colspan="2" align="center"><b>Create new Iteration</b></td>
-        <tr><td bgcolor="#E6E6E6">Iteration Name : </td><td><input type="text" size="150" name="<%=PropertyNames.ITERATION_NAME%>" placeholder="Iteration name required"> </td></tr>
-        <tr bgcolor="#E6E6E6">
-            <td>Iteration Description : </td>
+    <table>
+        <tr><td colspan="2" align="center"><b>Create new iteration</b></td>
+        <tr><td>Name</td><td><input type="text" size="114" name="<%=PropertyNames.ITERATION_NAME%>" placeholder="Iteration name required"> </td></tr>
+        <tr>
+            <td valign="top">Description</td>
             <td><textarea rows="20" cols="114" name="<%=PropertyNames.ITERATION_DESCRIPTION%>" placeholder="Iteration description"></textarea></td>
         </tr>
-       <tr><td bgcolor="#E6E6E6">Start Date : </td><td><input type="text" size="150" name="<%=PropertyNames.ITERATION_START_DATE%>" placeholder="<%=Constants.DATE_FORMAT%>"> </td></tr>
-       <tr><td bgcolor="#E6E6E6">End Date : </td><td><input type="text" size="150" name="<%=PropertyNames.ITERATION_END_DATE%>" placeholder="<%=Constants.DATE_FORMAT%>"> </td></tr>
-       <tr><td bgcolor="#E6E6E6">Engineer : </td>
+       <tr><td>Start Date</td><td><input type="text" size="10" name="<%=PropertyNames.ITERATION_START_DATE%>" placeholder="<%=Constants.DATE_FORMAT%>" value="<%=  DateFormatProvider.getCurrentDay() %>"> </td></tr>
+       <tr><td>End Date</td><td><input type="text" size="10" name="<%=PropertyNames.ITERATION_END_DATE%>" placeholder="<%=Constants.DATE_FORMAT%>" value="<%=  DateFormatProvider.getCurrentDay() %>"> </td></tr>
+       <tr><td>Engineer</td>
            <td>
            <select name="<%=PropertyNames.USER_ID%>">
                 <%
-                    String currentUserName = (String) session.getAttribute(PropertyNames.USER_NAME);
+                    String currentUserName = author.getAuthorName();
                     logger.info("Current author name retrieved " + currentUserName);
-                    List<Author> users = sessionDB.createQuery("from Author").list();
+                    List<Author> users = HqlQueryHelper.getAuthors(sessionDB, author.getOrganization().getId());
                     for (Author user : users) {
                         if (user.getAuthorName().equals(currentUserName)) {
                 %>
@@ -60,11 +62,11 @@ String projectIdString = request.getParameter(PropertyNames.PROJECT_ID);
                 %>
             </select>
            </td></tr>
-       <tr><td bgcolor="#E6E6E6">Project : </td>
+       <tr><td>Project</td>
            <td>
            <select name="<%=PropertyNames.PROJECT_ID%>">
                 <%
-                    List<Project> projects = sessionDB.createQuery("from Project").list();
+                    List<Project> projects = HqlQueryHelper.getProjects(sessionDB, author.getOrganization().getId());
                     long currentProjectId = Long.parseLong(projectIdString);
                     for (Project project : projects) {
                         if (project.getProjectId() == currentProjectId) {
@@ -81,7 +83,7 @@ String projectIdString = request.getParameter(PropertyNames.PROJECT_ID);
             </select>
            </td></tr>
        <tr><td colspan="2" align="center">
-            <input type="button" value="cancel" onclick="window.close();"/>
+            <input type="button" value="Cancel" onclick="window.close();"/>
             <input type="submit" name="<%=PropertyNames.USER_ACTION%>" value="<%=Action.Create%>" />
         </td></tr>
         

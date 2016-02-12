@@ -1,5 +1,10 @@
 package com.sb.constants;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public enum Status {
 
     New(1),

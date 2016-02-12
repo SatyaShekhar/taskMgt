@@ -2,6 +2,11 @@ package com.sb.pojo;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class Bug {
     private long bugId;
     private String name;

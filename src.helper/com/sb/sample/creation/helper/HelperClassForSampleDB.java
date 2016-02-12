@@ -20,11 +20,14 @@ import com.sb.pojo.UserStory;
  * Note :
  * This helper class will be used as a backup of all task i am going to create now till the basic flow of db is not clear. So over all
  * creation and populating initial user story and tasks will be done here and in future once this product is stable and having its own life
- * cycle this class will be deprecated till then it will be the key
+ * cycle this class will be deprecated till then it will be the key <br><br>
+ * 
+ * {@link Deprecated} as it its creating some entry which can not be reverted due to inconsistent DB population
  * 
  * @author sbarik
  * 
  */
+@Deprecated
 public class HelperClassForSampleDB {
 
     /**

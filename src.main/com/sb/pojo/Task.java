@@ -2,6 +2,11 @@ package com.sb.pojo;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class Task {
     private long taskId;
     private String name;

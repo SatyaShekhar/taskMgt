@@ -1,3 +1,4 @@
+<%@page import="com.sb.pojo.Author"%>
 <%@page import="com.sb.constants.Constants"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.sb.constants.Action"%>
@@ -9,19 +10,22 @@
 <%@page import="com.sb.db.helper.ConnectionProvider"%>
 <%@page import="org.hibernate.Session"%>
 <%@page import="com.sb.constants.PropertyNames"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" session="true"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" session="true" errorPage="user\InvalidUserLogin.jsp"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Admin your project and iteration</title>
+<title>Iteration Information</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images\general\drop.png">
 </head>
 <body>
     <jsp:include page="UserMenu.jsp"></jsp:include>
     <%!MessageLogger logger = new MessageLogger(getClass()); SimpleDateFormat  dateFormat = new SimpleDateFormat(Constants.DATE_FORMAT);%>
     <%
-        String userName = (String) session.getAttribute(PropertyNames.USER_NAME);
-        if (userName == null) {
+        Author user = (Author) session.getAttribute(PropertyNames.USER);
+        if (user == null) {
             session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "You have to login first to access user home page");
             response.sendRedirect("index.jsp");
             return;
@@ -45,7 +49,7 @@
         </tr>
         <tr style="color: blue">
             <td width="100" colspan="7" align="left"><b>Project Name : </b> <%=project.getProjectName()%></td>
-            <td align="center"><img width="25" title="Create new Iteration" src="images\icons\ceate-userstory.jpg"
+            <td align="center"><img width="25" title="Create new Iteration" src="images\icons\ceate-userstory.png"
                 onclick="window.open('UserIterationCreatePage.jsp?<%=PropertyNames.PROJECT_ID + "=" + projectIdString%>', 'newwindow', 'location=100,menubar=0,toolbar=0,scrollbars=0,width=1100,height=555,left=200,top=120')">
             </td>
         </tr>

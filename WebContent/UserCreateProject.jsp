@@ -1,3 +1,4 @@
+<%@page import="com.sb.db.helper.HqlQueryHelper"%>
 <%@page import="com.sb.constants.Action"%>
 <%@page import="com.sb.pojo.Author"%>
 <%@page import="java.util.List"%>
@@ -10,7 +11,7 @@
 <%@page import="java.util.Set"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" session="true"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,8 +23,8 @@
 <body>
 <%! MessageLogger logger = new MessageLogger(getClass()); %>
 <%
-    String userName = (String) session.getAttribute(PropertyNames.USER_NAME);
-    if (userName == null) {
+    Author author = (Author) session.getAttribute(PropertyNames.USER);
+    if (author == null) {
         session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "You have to login first to access project home page");
         response.sendRedirect("index.jsp");
         return;
@@ -31,7 +32,7 @@
     Session sessionDB = ConnectionProvider.openSession();
 %>
 <form action="manageProject">
-<table align="left">
+<table >
     <tr><td colspan="2" align="center"><b>Create new project</b></td>
     <tr><td >Name</td><td><input type="text" size="129" name="<%=PropertyNames.PROJECT_NAME%>" placeholder="Project description"> </td></tr>
     <tr valign="top"><td>Description </td>
@@ -41,9 +42,9 @@
     <tr><td >Engineer</td><td>
      <select name="<%=PropertyNames.USER_ID%>">
             <%
-                String currentUserName = (String) session.getAttribute(PropertyNames.USER_NAME);
+                String currentUserName = author.getAuthorName();
                 logger.info("Current author name retrieved " + currentUserName);
-                List<Author> users = sessionDB.createQuery("from Author").list();
+                List<Author> users = HqlQueryHelper.getAuthors(sessionDB, author.getOrganization().getId());
                 for (Author user : users) {
                     if (user.getAuthorName().equals(currentUserName)) {
             %>

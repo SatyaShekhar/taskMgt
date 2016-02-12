@@ -28,10 +28,12 @@
     <form action="manageBug">
         <%
             String bugId = request.getParameter(PropertyNames.BUG_ID);
+            Author loggedInUser = (Author)session.getAttribute(PropertyNames.USER);
             logger.info("Update bug of id " + bugId);
-            if (bugId == null) {
-                logger.info("Strange bug id is null here !!!!");
-                return;
+            if (bugId == null || loggedInUser == null) {
+                logger.info("Strange bug id is null here !!!!"); %>
+            <jsp:include page="user/InvalidUserLogin.jsp"/>
+           <%     return;
             }
             Session dbSession = ConnectionProvider.openSession();
             Bug bug = (Bug) dbSession.get(Bug.class, Long.parseLong(bugId));

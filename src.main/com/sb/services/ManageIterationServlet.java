@@ -26,6 +26,8 @@ import com.sb.pojo.Project;
 
 /**
  * Servlet implementation class ManageIterationServlet
+ * 
+ * @author satya60.shekhar@gmail.com
  */
 @WebServlet("/manageIteration")
 public class ManageIterationServlet extends HttpServlet {
@@ -76,7 +78,7 @@ public class ManageIterationServlet extends HttpServlet {
         String iterationName = request.getParameter(PropertyNames.ITERATION_NAME);
         String iterationDesc = request.getParameter(PropertyNames.ITERATION_DESCRIPTION);
         Iteration iteration = new Iteration(iterationName, iterationDesc);
-        if (Action.Create == action) { // TODO  better to use switch if fisible
+        if (Action.Create == action) {
             // Do nothing already new iteration with name and description is created
             History history = new History();
             history.addInfo(new PastInformation("New iteration created with name " + iterationName + " Description " + iterationDesc, loggedInUser));

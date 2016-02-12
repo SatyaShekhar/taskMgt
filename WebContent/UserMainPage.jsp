@@ -1,3 +1,6 @@
+<%@page import="java.util.Collections"%>
+<%@page import="com.sb.db.helper.HqlQueryHelper"%>
+<%@page import="com.sb.pojo.Author"%>
 <%@page import="com.sb.constants.BugStatus"%>
 <%@page import="com.sb.constants.Severity"%>
 <%@page import="com.sb.constants.Priority"%>
@@ -13,7 +16,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.hibernate.Session"%>
 <%@page import="com.sb.db.helper.ConnectionProvider"%>
-<%@page import="com.sb.db.helper.HibernateQueryHelper"%>
 <%@page import="com.sb.pojo.Project"%>
 <%@page import="java.util.List"%>
 <%@page import="com.sb.constants.PropertyNames"%>
@@ -23,6 +25,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Admin your User story and Task here</title>
+<link rel="icon" 
+      type="image/png" 
+      href="images\general\drop.png">
 <script type="text/javascript">
     var table = document.getElementById('table-1');
     var tableDnD = new TableDnD();
@@ -73,20 +78,19 @@ $(document).ready(function() {
             }
         }
         var x = document.getElementById(lnkid);
-        if (x.innerHTML == '[+] Expand ')
-            x.innerHTML = '[-] Collapse ';
+        if (x.innerHTML == '[+]')
+            x.innerHTML = '[-]';
         else
-            x.innerHTML = '[+] Expand ';
+            x.innerHTML = '[+]';
     }
 </script>
 </head>
 <body bgcolor="#D8D8D8">
     <%!MessageLogger logger = new MessageLogger(getClass());
     UserStoryStatusHelper usHelper = new UserStoryStatusHelper();%>
-    <jsp:include page="UserMenu.jsp"></jsp:include>
     <%
-        String userName = (String) session.getAttribute(PropertyNames.USER_NAME);
-        if (userName == null) {
+        Author user = (Author) session.getAttribute(PropertyNames.USER);
+        if (user == null) {
             session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "You have to login first to access your page");
             response.sendRedirect("index.jsp");
             return;
@@ -101,7 +105,7 @@ $(document).ready(function() {
         if (projectId != null) {
             project = (Project) session2.get(Project.class, projectId);
         }
-        List<Project> projects = session2.createQuery("from Project").list();
+        List<Project> projects = HqlQueryHelper.getProjects(session2, user.getOrganization().getId());
         List<Iteration> iterations = new ArrayList<Iteration>();
         if (project == null && (!projects.isEmpty())) {
             project = projects.get(0);
@@ -124,8 +128,9 @@ $(document).ready(function() {
             logger.info(iterations.size() + " iterations present and retrieved iteration is " + iteration.getName());
         }
     %>
+    <jsp:include page="UserMenu.jsp"></jsp:include>
     <form action="userMainPageAction">
-        <b>Project Name :</b> <select onchange="this.form.submit();" name="<%=PropertyNames.PROJECT_ID%>">
+    <b>Project Name :</b> <select onchange="this.form.submit();" name="<%=PropertyNames.PROJECT_ID%>">
             <%
                 for (Project project2 : projects) {
                     if (project.getProjectId() == project2.getProjectId()) {
@@ -172,30 +177,25 @@ $(document).ready(function() {
         </tr>
         <tr>
             <td colspan="11" align="right">
-                <img width="25" title="Create new user story" src="images\icons\ceate-userstory.jpg"
+                <img width="25" title="Create new user story" src="images\icons\ceate-userstory.png"
                 onclick="window.open('UserStoryCreateNew.jsp?<%=PropertyNames.ITERATION_ID + "=" + iterationId%>', 'newwindow', 'location=100,menubar=0,toolbar=0,scrollbars=0,width=1100,height=550,left=200,top=150')">
             </td>
         </tr>
         <%
             // Get all user stories by project and iteration name and display
-            String query = "from UserStory where  iteration.iterationId = '" + iterationId + "' and iteration.project.projectId = '"
-                    + projectId + "'";
-            List<UserStory> userStories = session2.createQuery(query).list();
-            logger.info("Hello " + query + "\nResult is " + userStories);
+            List<UserStory> userStories = HqlQueryHelper.getUserStorys(session2, iterationId);
+            Collections.sort(userStories);
             int index = 0;
             String selectedStyle = "background-color: green; color: white";
             for (UserStory userStory : userStories) {
                 ProgressStatus userStoryProgressStatus = usHelper.getProgressStatus(session2, userStory);
-                String queryStringReadTaskByUS = "from Task where userStory.userstoryId = '" + userStory.getUserstoryId() + "'";
-                List<Task> tasksForUS = session2.createQuery(queryStringReadTaskByUS).list();
-                String queryStringReadBugByUS = "from Bug where userStory.userstoryId = '" + userStory.getUserstoryId() + "'";
-                List<Bug> bugsForUS = session2.createQuery(queryStringReadBugByUS).list();
+                List<Task> tasksForUS = HqlQueryHelper.getTasksUnderUserStory(session2, userStory.getUserstoryId());
+                List<Bug> bugsForUS = HqlQueryHelper.getBugsUnderUserStory(session2, userStory.getUserstoryId());
         %>
         <!-- Row to display user story one row per US -->
         <tr ondragover="" ondrop="" draggable="true" dropzone="">
             <td><a href="javascript:toggle_visibility('<%=userStory.getUserstoryId()%>','lnk1<%=userStory.getUserstoryId()%>');">
-                    <div align="right" id="lnk1<%=userStory.getUserstoryId()%>" name="lnk1<%=userStory.getUserstoryId()%>">[+] Expand
-                    </div>
+                    <div align="center" id="lnk1<%=userStory.getUserstoryId()%>" name="lnk1<%=userStory.getUserstoryId()%>">[+]</div>
             </a></td>
             <td align="center"><img alt="User Story" title="User Story" src="images\icons\userstory.jpg" width="15" height="15"></td>
             <td>US<%=userStory.getUserstoryId()%></td>
@@ -214,7 +214,7 @@ $(document).ready(function() {
             <td align="center"><%=usHelper.getTotalEstimate(tasksForUS, session2)%></td>
             <th><%=usHelper.getTotalTodo(tasksForUS, session2)%></th>
             <td><%=userStory.getAuthor().getAuthorName()%></td>
-            <td align="center"><%=Priority.valueOf(userStory.getPriority())%></td>
+            <td align="center"><%="(" + userStory.getPriority() + ")" + Priority.valueOf(userStory.getPriority())%></td>
             <td width="130" align="right">
                 <img width="17" title="Create new task" src="images\icons\Create.png"
                 onclick="window.open('TaskCreateNew.jsp?<%=PropertyNames.USERSTORY_ID + "=" + userStory.getUserstoryId()%>', 'newwindow', 'location=100,menubar=0,toolbar=0,scrollbars=0,width=1110,height=510,left=200,top=150')">
@@ -241,12 +241,11 @@ $(document).ready(function() {
             for (Task task : tasksForUS) {
                     ProgressStatus progressStatus = ProgressStatus.valueOf(task.getStatus());
         %>
-        <tr bgcolor="#D8D8D8" id="<%=userStory.getUserstoryId()%>" style="display: none;">
-            <!-- bgcolor="#DAEEEF" -->
+        <tr id="<%=userStory.getUserstoryId()%>" style="display: none;">
             <th></th>
             <td align="center"><img alt="Task" title="Task" src="images\icons\task.jpg" width="15" height="15"></td>
             <td align="right">TA<%=task.getTaskId()%></td>
-            <td class="dblclick" id="<%=task.getTaskId()%>"><%=task.getName()%></div></td>
+            <td class="dblclick" id="<%=task.getTaskId()%>"><%=task.getName()%></td>
             <td style="font-weight: bold">
                 <table>
                     <tr>
@@ -278,19 +277,14 @@ $(document).ready(function() {
         <!-- Logic to display bugs per user story -->
         <%
             for (Bug bug : bugsForUS) {
-                BugStatus bugStatus = BugStatus.valueOf(bug.getStatus());
         %>
-        <tr bgcolor="#D8D8D8" id="<%=userStory.getUserstoryId()%>" style="display: none;">
+        <tr id="<%=userStory.getUserstoryId()%>" style="display: none;">
             <th></th>
             <td align="center"><img alt="Bug" title="Bug" src="images\icons\common-bug.png" width="15" height="15"></td>
-            <td align="right">BUG(<%=bug.getBugId()%>)</td>
-            <td class="dblclick" id="<%=bug.getBugId()%>"><%=bug.getName()%></div></td>
+            <td align="right" draggable="true">BUG(<%=bug.getBugId()%>)</td>
+            <td class="dblclick" id="<%=bug.getBugId()%>"><%=bug.getName()%></td>
             <td style="font-weight: bold">
-                <table>
-                    <tr>
-                        <td colspan="3" ><%= bugStatus %></td>
-                    </tr>
-                </table>
+               <%= BugStatus.valueOf(bug.getStatus()) %>
             </td>
             <td align="center">&nbsp;</td>
             <td align="center"><%=bug.getEstimate()%></td>

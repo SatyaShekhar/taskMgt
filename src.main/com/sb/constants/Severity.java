@@ -1,5 +1,10 @@
 package com.sb.constants;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public enum Severity {
     Future(1),
     Cusmetic(2),

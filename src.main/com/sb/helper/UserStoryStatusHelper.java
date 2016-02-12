@@ -5,9 +5,15 @@ import java.util.List;
 import org.hibernate.Session;
 
 import com.sb.constants.ProgressStatus;
+import com.sb.db.helper.HqlQueryHelper;
 import com.sb.pojo.Task;
 import com.sb.pojo.UserStory;
 
+/**
+ * 
+ * @author satya60.shekhar@gmail.com
+ *
+ */
 public class UserStoryStatusHelper {
 
     /**
@@ -74,14 +80,10 @@ public class UserStoryStatusHelper {
      * @return
      */
     public ProgressStatus getProgressStatus(Session session, UserStory userStory) {
-        
-        if (!session.isOpen()) {
-            throw new IllegalStateException("This method should be called under a open hibernate transaction");
-        }
         boolean complete = false;
         boolean accept = false;
         boolean define = false;
-        List<Task> tasks = session.createQuery("from Task where userStory.userstoryId = '" + userStory.getUserstoryId() + "'").list();
+        List<Task> tasks = HqlQueryHelper.getTasksUnderUserStory(session, userStory.getUserstoryId());
         if(tasks.isEmpty()) {
             return ProgressStatus.Defined;
         }

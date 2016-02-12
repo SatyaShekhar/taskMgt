@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Cloneable is implemented for project object where ever it is called it should be either in a transaction or a object in egar fetched one
  * 
- * @author sbarik
+ * @author satya60.shekhar@gmail.com
  *
  */
 public class Project implements Cloneable {
@@ -15,7 +15,8 @@ public class Project implements Cloneable {
     private Date creationDate;
     private Author author;
     private History history;
-    
+    private Organization organization;
+
     public Project() { /* For Hibernate */ }
     
     public Project(String name, String description) {
@@ -106,7 +107,7 @@ public class Project implements Cloneable {
         Project project = new Project(this.projectName, this.projectDescription);
         project.creationDate = new Date();
         project.author = this.author;
-        // TODO - Bidirectionla mapping is required to keep iterations and same it required for all other child implementation to clone
+        // TODO - Bidirectional mapping is required to keep iterations and same it required for all other child implementation to clone
         return project;
     }
 
@@ -123,5 +124,18 @@ public class Project implements Cloneable {
     public void setHistory(History history) {
         this.history = history;
     }
-    
+
+    /**
+     * @return the organization
+     */
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    /**
+     * @param organization the organization to set
+     */
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
 }

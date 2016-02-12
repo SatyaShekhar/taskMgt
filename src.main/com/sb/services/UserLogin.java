@@ -16,6 +16,8 @@ import com.sb.pojo.Author;
 
 /**
  * Servlet implementation class UserLogin
+ * 
+ * @author satya60.shekhar@gmail.com
  */
 @WebServlet("/userLogin")
 public class UserLogin extends HttpServlet {
@@ -32,7 +34,7 @@ public class UserLogin extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO Auto-generated method stub
+        // no implementation required
     }
 
     /**
@@ -44,9 +46,8 @@ public class UserLogin extends HttpServlet {
         HttpSession session = request.getSession(true);
         Author user = HibernateQueryHelper.isValidUser(userName, password);
         if(user != null) {
-            session.setAttribute(PropertyNames.USER_NAME, userName);
             session.setAttribute(PropertyNames.USER, user);
-            response.sendRedirect("UserMainPage.jsp");
+            response.sendRedirect("MyAccount.jsp");
             return;
         } else {
             session.setAttribute(PropertyNames.INVALID_USER_ERROR_MESSAGE, "UsrName or password is invalid");
